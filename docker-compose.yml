@@ -1,0 +1,18 @@
+services:
+  service_b:
+    build:
+      context: ./service_b
+    volumes:
+      - /tmp:/tmp  # Share /tmp for the Unix Domain Socket
+    restart: always
+
+  service_a:
+    build:
+      context: ./service_a
+    volumes:
+      - /tmp:/tmp  # Share /tmp for the Unix Domain Socket
+    ports:
+      - "8000:8000"  # Expose service_a's port to access it from outside
+    depends_on:
+      - service_b
+    restart: always
